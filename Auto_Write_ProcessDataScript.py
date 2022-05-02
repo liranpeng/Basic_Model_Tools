@@ -107,12 +107,14 @@ def preprocess(argument):
     ind_Peruvian0 = ind_Peruvian[1:]
     #print(ind_Peruvian)
     ind_Peruvian = unique(ind_Peruvian0)
-
+     
     Region_Path = indir+rname+'_Run'
-    cmd = 'mkdir '+ Region_Path
-    os.system(cmd)
     cmd = 'rm -rf '+ Region_Path
     os.system(cmd)
+    
+    cmd = 'mkdir '+ Region_Path
+    os.system(cmd)
+    
     f6 = open(Region_Path+'/'+'Run_main'+(ftype)+'.sh',"w")
     f6.write('#!/bin/bash')
     f6.write('\n')
