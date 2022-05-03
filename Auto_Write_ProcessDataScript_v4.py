@@ -1,4 +1,15 @@
+"""Script to read the raw model nc files and write new nc files 
+only include the average of a certain region. 
 
+Author: Liran Peng
+
+TODO:
+- Input the region lon/lat 
+- Based on lon/lat to find corresponding column number
+- Split the raw model output into selected columns
+- Concatenate all plitted nc files from multiple input files into a single output file  
+Note: The result nc file will add all columns into time dimension instead of ncol.
+"""
 
 import os
 import sys
@@ -190,7 +201,7 @@ def preprocess(argument):
         f3 = open(Region_Path+'/'+'step2_runcombine-'+Date_Time+(ftype)+'.sh',"w")
         f3.write('#!/bin/bash')
         f3.write('\n')
-        f3.write('ncra ')
+        f3.write('ncrcat ')
         f2 = open(Region_Path+'/'+'step1_runsplit-'+Date_Time+(ftype)+'.sh',"w")
         f2.write('#!/bin/bash')
         f2.write('\n')
@@ -215,7 +226,7 @@ def preprocess(argument):
             f.write('\n')
 
         #UPhy = eval(evalstring)
-        f3.write(Date_Time+rname+'_mean_'+(ftype)+'.nc')
+        f3.write(Date_Time+rname+'_combined_'+(ftype)+'.nc')
         f3.write('\n')
         #f3.write('rm *'+rname+'_split.nc')
         f3.write('\n')
@@ -244,7 +255,7 @@ def preprocess(argument):
     testname = '*_split_'+(ftype)+'.nc'
     
     f6.write('\n')
-    f6.write('count=$(find '+Region_Path+' -maxdepth 1 -name "*_split_h0.nc" | wc -l)')
+    f6.write('count=$(find '+Region_Path+' -maxdepth 1 -name "*_split_'+(ftype)+'.nc" | wc -l)')
     f6.write('\n')
     f6.write('echo $count')    
     f6.write('\n')
@@ -293,7 +304,7 @@ def preprocess(argument):
     f6.write('\n')
     f6.write('cd '+rname)
     f6.write('\n')    
-    f6.write('cp '+Region_Path+'/*mean*.nc .')    
+    f6.write('cp '+Region_Path+'/*combined*.nc .')    
     f5.write('\n')
     f5.write('wait')
     f5.write('\n')

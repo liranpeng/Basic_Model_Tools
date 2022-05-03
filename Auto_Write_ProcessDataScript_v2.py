@@ -1,4 +1,14 @@
+"""Script to read the raw model nc files and write new nc files 
+only include the average of a certain region. 
 
+Author: Liran Peng
+
+TODO:
+- Input the region lon/lat 
+- Based on lon/lat to find corresponding column number
+- Split the raw model output into selected columns
+- Average over all splitted nc files
+"""
 
 import os
 import sys
@@ -244,7 +254,7 @@ def preprocess(argument):
     testname = '*_split_'+(ftype)+'.nc'
     
     f6.write('\n')
-    f6.write('count=$(find '+Region_Path+' -maxdepth 1 -name "*_split_h0.nc" | wc -l)')
+    f6.write('count=$(find '+Region_Path+' -maxdepth 1 -name "*_split_'+(ftype)+'.nc" | wc -l)')
     f6.write('\n')
     f6.write('echo $count')    
     f6.write('\n')
